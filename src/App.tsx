@@ -1,5 +1,13 @@
-function App() {
-  return <h1 className="text-3xl font-bold underline">Hello world!</h1>;
-}
+import { Navbar } from "./components/navbar";
 
-export default App;
+export const App = () => {
+  return (
+    <>
+      <Navbar />
+
+      <main>
+        <h1 className="text-3xl font-bold underline">Hello world!</h1>
+      </main>
+    </>
+  );
+};
