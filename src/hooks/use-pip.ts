@@ -48,6 +48,8 @@ export const usePip = <T extends HTMLElement>(ref: RefObject<T | undefined>) => 
     });
 
     parentRef.current = ref.current.parentElement || window.document.body;
+    pipWindow.document.documentElement.classList.add(...window.document.documentElement.classList);
+    pipWindow.document.body.classList.add(...window.document.body.classList);
 
     // Move the player to the Picture-in-Picture window.
     pipWindow.document.body.append(ref.current);
