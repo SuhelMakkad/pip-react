@@ -1,4 +1,4 @@
-import { forwardRef, useRef } from "react";
+import { forwardRef, useEffect, useRef } from "react";
 import { UserCard } from "@/components/user-card";
 
 import { usePip } from "@/hooks/use-pip";
@@ -6,11 +6,18 @@ import { usePip } from "@/hooks/use-pip";
 import { users } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { PictureInPicture2 } from "lucide-react";
+import { useTheme } from "./theme-provider";
 
 export const UserList = () => {
   const ref = useRef<HTMLUListElement>(null);
 
-  const { openInPipMode, exitPipMode, isInPipMode, isPiPSupported } = usePip(ref);
+  const { theme } = useTheme();
+  const { openInPipMode, exitPipMode, isInPipMode, isPiPSupported, pipWindowRef } = usePip(ref);
+
+  useEffect(() => {
+    pipWindowRef.current?.document.documentElement.classList.remove("light", "dark");
+    pipWindowRef.current?.document.documentElement.classList.add(theme);
+  }, [theme, pipWindowRef]);
 
   return (
     <>

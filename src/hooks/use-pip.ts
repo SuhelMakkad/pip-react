@@ -59,5 +59,5 @@ export const usePip = <T extends HTMLElement>(ref: RefObject<T | undefined>) => 
     pipWindow.addEventListener("pagehide", exitPipMode);
   }, [exitPipMode, ref]);
 
-  return { openInPipMode, isPiPSupported, isInPipMode, exitPipMode };
+  return { openInPipMode, isPiPSupported, isInPipMode, exitPipMode, pipWindowRef };
 };
