@@ -5,6 +5,7 @@ import { usePip } from "@/hooks/use-pip";
 
 import { users } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import { PictureInPicture2 } from "lucide-react";
 
 export const UserList = () => {
   const ref = useRef<HTMLUListElement>(null);
@@ -16,8 +17,11 @@ export const UserList = () => {
       <List ref={ref} className={isInPipMode ? "min-h-screen" : ""} />
 
       {isInPipMode && (
-        <div className="text-sm mt-1">
-          <p className="text-center"> Click the button below to exit PIP mode.</p>
+        <div className="text-sm flex flex-col justify-center mt-28">
+          <PictureInPicture2 className="w-28 h-28 text-muted-foreground/50 mx-auto" />
+          <p className="text-center text-muted-foreground">
+            Click the button below to exit PIP mode.
+          </p>
         </div>
       )}
 
@@ -32,9 +36,9 @@ export const UserList = () => {
           {isInPipMode ? "Exit" : "Enter"} PIP mode
         </button>
       ) : (
-        <span className="absolute bottom-3 right-1/2 translate-x-1/2 border text-sm py-1 px-2.5 rounded-md">
-          PIP mode is not supported in your browser.
-        </span>
+        <div className="absolute bottom-3 right-1/2 translate-x-1/2 border text-sm py-1 px-2.5 rounded-md">
+          <span>PIP mode is not supported in your browser.</span>
+        </div>
       )}
     </>
   );
