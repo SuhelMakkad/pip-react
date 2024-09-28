@@ -1,4 +1,4 @@
-import { useState, useRef, RefObject } from "react";
+import { useState, useRef, RefObject, useCallback } from "react";
 
 const isPiPSupported = "documentPictureInPicture" in window;
 
@@ -7,7 +7,7 @@ export const usePip = <T extends HTMLElement>(ref: RefObject<T | undefined>) => 
   const pipWindowRef = useRef<Window>();
   const [isInPipMode, setIsInPipMode] = useState(false);
 
-  const exitPipMode = () => {
+  const exitPipMode = useCallback(() => {
     window.focus();
     pipWindowRef.current?.close();
 
@@ -15,9 +15,9 @@ export const usePip = <T extends HTMLElement>(ref: RefObject<T | undefined>) => 
       parentRef.current.append(ref.current);
       setIsInPipMode(false);
     }
-  };
+  }, [ref]);
 
-  const openInPipMode = async () => {
+  const openInPipMode = useCallback(async () => {
     if (!ref.current || !isPiPSupported) {
       setIsInPipMode(false);
       return;
@@ -57,7 +57,7 @@ export const usePip = <T extends HTMLElement>(ref: RefObject<T | undefined>) => 
 
     // Move the player back when the Picture-in-Picture window closes.
     pipWindow.addEventListener("pagehide", exitPipMode);
-  };
+  }, [exitPipMode, ref]);
 
   return { openInPipMode, isPiPSupported, isInPipMode, exitPipMode };
 };

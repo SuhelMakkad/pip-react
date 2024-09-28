@@ -1,12 +1,15 @@
 import { forwardRef, useRef } from "react";
 import { UserCard } from "@/components/user-card";
+
 import { usePip } from "@/hooks/use-pip";
+
 import { users } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 export const UserList = () => {
   const ref = useRef<HTMLUListElement>(null);
-  const { openInPipMode, exitPipMode, isInPipMode } = usePip(ref);
+
+  const { openInPipMode, exitPipMode, isInPipMode, isPiPSupported } = usePip(ref);
 
   return (
     <>
@@ -18,15 +21,21 @@ export const UserList = () => {
         </div>
       )}
 
-      <button
-        className={cn(
-          "bottom-3 right-1/2 mx-auto flex rounded-full border shadow-sm text-xs px-2.5 py-1 bg-primary text-primary-foreground",
-          isInPipMode ? "static mt-4" : "absolute translate-x-1/2"
-        )}
-        onClick={isInPipMode ? exitPipMode : openInPipMode}
-      >
-        {isInPipMode ? "Exit" : "Enter"} PIP mode
-      </button>
+      {isPiPSupported ? (
+        <button
+          className={cn(
+            "bottom-3 right-1/2 mx-auto flex rounded-full border shadow-sm text-xs px-2.5 py-1 bg-primary text-primary-foreground",
+            isInPipMode ? "static mt-4" : "absolute translate-x-1/2"
+          )}
+          onClick={isInPipMode ? exitPipMode : openInPipMode}
+        >
+          {isInPipMode ? "Exit" : "Enter"} PIP mode
+        </button>
+      ) : (
+        <span className="absolute bottom-3 right-1/2 translate-x-1/2 border text-sm py-1 px-2.5 rounded-md">
+          PIP mode is not supported in your browser.
+        </span>
+      )}
     </>
   );
 };
