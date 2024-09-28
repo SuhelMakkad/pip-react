@@ -43,11 +43,11 @@ jobs:
         run: echo "BASE_PATH=/$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)" >> $GITHUB_ENV
 
       - name: Build my App
-        run: pnpm run build && touch ./out/.nojekyll
+        run: pnpm run build && touch ./dist/.nojekyll
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4.6.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: public # The branch the action should deploy to.
-          folder: out # The folder the action should deploy to.
+          folder: dist # The folder the action should deploy to.
